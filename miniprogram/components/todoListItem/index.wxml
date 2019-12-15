@@ -1,0 +1,12 @@
+<!-- components/todoListItem/index.wxml -->
+<!-- <view class="item-content" id="{{itemInfo.id}}" bindtap="navigateToDetail">
+
+  <view class="item-date">{{itemInfo.deadline}}</view>
+  <view class="item-text">{{itemInfo.title}}</view>
+</view> -->
+<view class="weui-cells weui-cells_after-title" id="{{itemInfo.id}}" bindtap="navigateToDetail">
+  <view class="weui-cell">
+    <view class="weui-cell__bd">{{itemInfo.deadline}}</view>
+    <view class="weui-cell__ft">{{itemInfo.title}}</view>
+  </view>
+</view>

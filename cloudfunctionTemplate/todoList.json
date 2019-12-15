@@ -1,0 +1,22 @@
+[
+  {
+    "name": "getToList",
+    "value": {
+      "type": "get"
+    }
+  },
+  {
+    "name": "addToList",
+    "value": {
+      "type": "add",
+      "data": {
+        "openid": "oud5p5GSBTgEocdBUlNV5R9ECvFw",
+        "deadline": "2019年10月28日",
+        "createTime": "2019年9月10日",
+        "status": "open",
+        "title": "hahhahha",
+        "description": "小程序3"
+      }
+    }
+  }
+]

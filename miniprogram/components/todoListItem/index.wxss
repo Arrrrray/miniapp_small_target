@@ -1,0 +1,23 @@
+/* components/todoListItem/index.wxss */
+@import '../../style/weui.wxss';
+/* .item-content {
+  display: flex;
+  text-align: left;
+  font-size: 30rpx;
+  line-height: 80rpx;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+  background-color: #fff;
+}
+
+.item-date {
+  flex: 1;
+  color: #666;
+  font-size: 28rpx;
+  text-align: center;
+}
+
+.item-text {
+  flex: 2;
+  text-indent: 20rpx;
+  color: #333;
+} */
