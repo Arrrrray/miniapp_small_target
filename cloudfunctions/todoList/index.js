@@ -8,69 +8,52 @@ const db = cloud.database()
 
 // 云函数入口函数
 exports.main = async(event, context) => {
-  console.log(event, context)
-  let result;
+  console.log('event', event);
   if (event.type === 'get') {
-    result = await getTodoList(event.data);
+    return await getTodoList(event.data);
   }
   if (event.type === 'add') {
-    return addTodoList(event.data);
+    return await addTodoList(event.data);
   }
-
-  return result;
-
-  // const wxContext = cloud.getWXContext()
-
-  // return {
-  //   event,
-  //   openid: wxContext.OPENID,
-  //   appid: wxContext.APPID,
-  //   unionid: wxContext.UNIONID,
-  // }
+  if (event.type === 'update') {
+    return updateTodoList(event.id, event.data);
+  }
 }
 
 const getTodoList = (data) => {
-  db.collection('todo_list')
+  const res = db.collection('todo_list')
     .where({
       _openid: cloud.getWXContext().OPENID,
-      status: 'open'
+      ...data,
     })
     .orderBy('deadline', 'desc')
-    .skip(1)
-    .limit(10)
-    .get({
-      success: res => {
-        console.log('[数据库] [查询记录] 成功: ', res)
-        return res;
-      },
-      fail: err => {
-        wx.showToast({
-          icon: 'none',
-          title: '查询记录失败'
-        })
-        console.error('[数据库] [查询记录] 失败：', err)
-        return err;
-      }
-    })
+    .get()
 
+  return res;
 }
 
-function addTodoList(data) {
-  db.collection('todo_list').add({
-    data: data,
-    success: res => {
-      // 在返回结果中会包含新创建的记录的 _id
-      wx.showToast({
-        title: '新增记录成功',
-      })
-      console.log('[数据库] [新增记录] 成功，记录 _id: ', res._id)
-    },
-    fail: err => {
-      wx.showToast({
-        icon: 'none',
-        title: '新增记录失败'
-      })
-      console.error('[数据库] [新增记录] 失败：', err)
-    }
-  })
+const addTodoList = (data) => {
+  const res = db.collection('todo_list').add({
+      // data 字段表示需新增的 JSON 数据
+      data: data,
+    })
+    .then(res => {
+      console.log(res)
+    })
+    .catch(console.error)
+  return res;
+}
+
+const updateTodoList = (id, data) => {
+  console.log(id, data)
+  // try {
+  //   return await db.collection('todo_list').where({
+  //       _id: id
+  //     })
+  //     .update({
+  //       data: data,
+  //     })
+  // } catch (e) {
+  //   console.error(e)
+  // }
 }

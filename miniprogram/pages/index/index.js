@@ -139,119 +139,76 @@ Page({
   },
 
   getTodoListOpen: function() {
+    wx.showLoading({
+      title: '加载中',
+    })
     const _this = this;
     wx.cloud.callFunction({
       // 云函数名称
-      name: 'getTodoList',
+      name: 'todoList',
       // 传给云函数的参数
-      data: {},
+      data: {
+        type: 'get',
+        data: {
+          status: 'open',
+        }
+      },
       success: function(res) {
-        console.log(res)
+        wx.hideLoading()
         _this.setData({
           todoListOpen: _this.formatTodoList(res.result.data),
         })
       },
       fail: console.error
     })
-    // const db = wx.cloud.database();
-    // const _this = this;
-    // db.collection('todo_list')
-    //   .where({
-    //     _openid: app.globalData.openid,
-    //     status: 'open',
-    //   })
-    //   .orderBy('deadline', 'desc')
-    //   // .skip(1)
-    //   // .limit(10)
-    //   .get({
-    //     success: res => {
-    //       console.log('[数据库] [查询记录] 成功: ', res);
-    //       this.setData({
-    //         todoListOpen: this.formatTodoList(res.data),
-    //       })
-    //     },
-    //     fail: err => {
-    //       wx.showToast({
-    //         icon: 'none',
-    //         title: '查询记录失败'
-    //       })
-    //       console.error('[数据库] [查询记录] 失败：', err)
-    //     }
-    //   })
   },
   getTodoListDone: function() {
-    // wx.cloud.callFunction({
-    //   // 云函数名称
-    //   name: 'getTodoList',
-    //   // 传给云函数的参数
-    //   data: {},
-    //   success: function(res) {
-    //     console.log(res)
-    //   },
-    //   fail: console.error
-    // })
-    const db = wx.cloud.database();
+    wx.showLoading({
+      title: '加载中',
+    })
     const _this = this;
-    db.collection('todo_list')
-      .where({
-        _openid: app.globalData.openid,
-        status: 'done',
-      })
-      .orderBy('deadline', 'desc')
-      // .skip(1)
-      // .limit(10)
-      .get({
-        success: res => {
-          console.log('[数据库] [查询记录] 成功: ', res);
-          this.setData({
-            todoListDone: this.formatTodoList(res.data),
-          })
-        },
-        fail: err => {
-          wx.showToast({
-            icon: 'none',
-            title: '查询记录失败'
-          })
-          console.error('[数据库] [查询记录] 失败：', err)
+    wx.cloud.callFunction({
+      // 云函数名称
+      name: 'todoList',
+      // 传给云函数的参数
+      data: {
+        type: 'get',
+        data: {
+          status: 'done',
         }
-      })
+      },
+      success: function(res) {
+        wx.hideLoading()
+        _this.setData({
+          todoListDone: _this.formatTodoList(res.result.data),
+        })
+      },
+      fail: console.error
+    })
   },
   getTodoListClosed: function() {
-    // wx.cloud.callFunction({
-    //   // 云函数名称
-    //   name: 'getTodoList',
-    //   // 传给云函数的参数
-    //   data: {},
-    //   success: function(res) {
-    //     console.log(res)
-    //   },
-    //   fail: console.error
-    // })
-    const db = wx.cloud.database();
+    wx.showLoading({
+      title: '加载中',
+    })
     const _this = this;
-    db.collection('todo_list')
-      .where({
-        _openid: app.globalData.openid,
-        status: 'closed',
-      })
-      .orderBy('deadline', 'desc')
-      // .skip(1)
-      // .limit(10)
-      .get({
-        success: res => {
-          console.log('[数据库] [查询记录] 成功: ', res);
-          this.setData({
-            todoListClosed: this.formatTodoList(res.data),
-          })
-        },
-        fail: err => {
-          wx.showToast({
-            icon: 'none',
-            title: '查询记录失败'
-          })
-          console.error('[数据库] [查询记录] 失败：', err)
+    wx.cloud.callFunction({
+      // 云函数名称
+      name: 'todoList',
+      // 传给云函数的参数
+      data: {
+        type: 'get',
+        data: {
+          status: 'closed',
         }
-      })
+      },
+      success: function (res) {
+        wx.hideLoading()
+        _this.setData({
+          todoListClosed: _this.formatTodoList(res.result.data),
+        })
+      },
+      fail: console.error
+    })
   },
 
   formatTodoList: function(data) {
