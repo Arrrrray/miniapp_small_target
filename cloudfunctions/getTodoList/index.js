@@ -11,35 +11,18 @@ const db = cloud.database();
 exports.main = async(event, context) => {
   const wxContext = cloud.getWXContext()
   console.log(123)
-  db.collection('todo_list')
+  await db.collection('todo_list')
     .where({
-      // _openid: wxContext.OPENID,
+      _openid: wxContext.OPENID,
       status: 'open',
     })
     .orderBy('deadline', 'desc')
-    .skip(1)
-    .limit(10)
-    .get({
-      success: res => {
-        console.log(345)
-        console.log(res);
-        return {
-          res,
-          event,
-          openid: wxContext.OPENID,
-          appid: wxContext.APPID,
-          unionid: wxContext.UNIONID,
-        }
-      },
-      fail: err => {
-        return {
-          err,
-          event,
-          openid: wxContext.OPENID,
-          appid: wxContext.APPID,
-          unionid: wxContext.UNIONID,
-        }
-      }
+    // .get();
+    // console.log("test=", test);
+    // return test;
+    .get().then(res => {
+
+      console.log(res)
     })
 
 

@@ -11,7 +11,7 @@ exports.main = async(event, context) => {
   console.log(event, context)
   let result;
   if (event.type === 'get') {
-    result = getTodoList(event.data);
+    result = await getTodoList(event.data);
   }
   if (event.type === 'add') {
     return addTodoList(event.data);
@@ -19,7 +19,7 @@ exports.main = async(event, context) => {
 
   return result;
 
-  const wxContext = cloud.getWXContext()
+  // const wxContext = cloud.getWXContext()
 
   // return {
   //   event,
