@@ -1,2 +1,20 @@
 /* components/todoListItem/index.wxss */
-@import '../../style/weui.wxss';
+@import "../../style/weui.wxss";
+@import "../../style/iconfont.wxss";
+
+.icon-status {
+  font-size: 36rpx;
+  font-weight: 600;
+  margin-right: 10rpx;
+  line-height: 60rpx;
+}
+.icon-open {
+  color: rgb(0, 176, 255);
+}
+.icon-done {
+  color: #07c160;
+}
+
+.icon-closed {
+  color: #ce3c39;
+}
