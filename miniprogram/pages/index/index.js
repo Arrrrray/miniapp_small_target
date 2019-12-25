@@ -13,7 +13,7 @@ Page({
     todoListClosed: [],
   },
 
-  onLoad: function() {
+  onLoad: function () {
     if (!wx.cloud) {
       wx.redirectTo({
         url: '../chooseLib/chooseLib',
@@ -42,7 +42,7 @@ Page({
   /**
    * 生命周期函数--监听页面显示
    */
-  onShow: function() {
+  onShow: function () {
     this.getTodoListOpen();
     this.getTodoListDone();
     this.getTodoListClosed();
@@ -51,13 +51,13 @@ Page({
   /**
    * 页面相关事件处理函数--监听用户下拉动作
    */
-  onPullDownRefresh: function() {
+  onPullDownRefresh: function () {
     this.getTodoListOpen();
     this.getTodoListDone();
     this.getTodoListClosed();
   },
 
-  onGetUserInfo: function(e) {
+  onGetUserInfo: function (e) {
     if (!this.data.logged && e.detail.userInfo) {
       this.setData({
         logged: true,
@@ -67,7 +67,7 @@ Page({
     }
   },
 
-  onGetOpenid: function() {
+  onGetOpenid: function () {
     // 调用云函数
     wx.cloud.callFunction({
       name: 'login',
@@ -89,13 +89,13 @@ Page({
   },
 
   // 上传图片
-  doUpload: function() {
+  doUpload: function () {
     // 选择图片
     wx.chooseImage({
       count: 1,
       sizeType: ['compressed'],
       sourceType: ['album', 'camera'],
-      success: function(res) {
+      success: function (res) {
 
         wx.showLoading({
           title: '上传中',
@@ -138,7 +138,7 @@ Page({
     })
   },
 
-  getTodoListOpen: function() {
+  getTodoListOpen: function () {
     wx.showLoading({
       title: '加载中',
     })
@@ -153,7 +153,7 @@ Page({
           status: 'open',
         }
       },
-      success: function(res) {
+      success: function (res) {
         wx.hideLoading()
         _this.setData({
           todoListOpen: _this.formatTodoList(res.result.data),
@@ -162,7 +162,7 @@ Page({
       fail: console.error
     })
   },
-  getTodoListDone: function() {
+  getTodoListDone: function () {
     wx.showLoading({
       title: '加载中',
     })
@@ -177,7 +177,7 @@ Page({
           status: 'done',
         }
       },
-      success: function(res) {
+      success: function (res) {
         wx.hideLoading()
         _this.setData({
           todoListDone: _this.formatTodoList(res.result.data),
@@ -186,7 +186,7 @@ Page({
       fail: console.error
     })
   },
-  getTodoListClosed: function() {
+  getTodoListClosed: function () {
     wx.showLoading({
       title: '加载中',
     })
@@ -211,11 +211,11 @@ Page({
     })
   },
 
-  formatTodoList: function(data) {
+  formatTodoList: function (data) {
     const newData = data.map((item, index) => {
       return {
         id: item._id,
-        title: item.title,
+        title: item.title.length > 9 ? `${item.title.slice(0, 10)}...` : item.title,
         description: item.description,
         status: item.status,
         deadline: item.deadline,
@@ -224,7 +224,7 @@ Page({
     return newData;
   },
 
-  addTodoList: function() {
+  addTodoList: function () {
     wx.navigateTo({
       url: '/pages/todolist/addTodoList/index',
     })
