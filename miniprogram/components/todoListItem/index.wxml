@@ -1,7 +1,15 @@
 <!-- components/todoListItem/index.wxml -->
 <view class="weui-cells weui-cells_after-title" id="{{itemInfo.id}}" bindtap="navigateToDetail">
   <view class="weui-cell">
+    <view class="weui-cell__hd">
+      <icon wx:if="{{itemInfo.status === 'open'}}" class="sparrow-icon icon-tuihuanhuo-tuikuanzhong icon-status icon-open"></icon>
+      <icon wx:if="{{itemInfo.status === 'done'}}" class="sparrow-icon icon-popup-yes icon-status icon-done"></icon>
+      <icon wx:if="{{itemInfo.status === 'closed'}}" class="sparrow-icon icon-count-down icon-status icon-closed"></icon>
+    </view>
+    <!-- <icon class="sparrow-icon icon icon-shouhoushenhezhuangtaigou"></icon> -->
     <view class="weui-cell__bd">{{itemInfo.deadline}}</view>
-    <view class="weui-cell__ft">{{itemInfo.title}}</view>
+    <view wx:if="{{itemInfo.status === 'open'}}" class="weui-cell__ft icon-open">{{itemInfo.title}}</view>
+    <view wx:if="{{itemInfo.status === 'done'}}" class="weui-cell__ft icon-done">{{itemInfo.title}}</view>
+    <view wx:if="{{itemInfo.status === 'closed'}}" class="weui-cell__ft icon-closed">{{itemInfo.title}}</view>
   </view>
 </view>

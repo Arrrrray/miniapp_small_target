@@ -221,7 +221,7 @@ Page({
     const newData = data.map((item, index) => {
       return {
         id: item._id,
-        title: item.title,
+        title: item.title.length > 9 ? `${item.title.slice(0, 10)}...` : item.title,
         description: item.description,
         status: item.status,
         deadline: item.deadline,
