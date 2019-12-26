@@ -1,0 +1,36 @@
+/* components/anniversaryItem/index.wxss */
+.item {
+  display: flex;
+  height: 120rpx;
+  margin: 20rpx 3%;
+  padding: 20rpx;
+  background-color: #fff;
+}
+
+.item-info {
+  flex: 2;
+  text-align: left;
+}
+
+.item-title {
+  font-size: 34rpx;
+  font-weight: 600;
+  height: 80rpx;
+  line-height: 80rpx;
+}
+
+.item-date {
+  font-size: 26rpx;
+  font-weight: 400;
+  height: 40rpx;
+  line-height: 40rpx;
+}
+
+.data-num {
+  flex: 1;
+  font-size: 40rpx;
+  font-weight: 600;
+  text-align: center;
+  height: 120rpx;
+  line-height: 120rpx;
+}

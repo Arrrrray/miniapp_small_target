@@ -1,0 +1,10 @@
+<!-- components/anniversaryItem/index.wxml -->
+<view class="item" id="{{itemInfo.id}}" bindtap="navigateToDetail">
+  <view class="item-info">
+    <view class="item-title">{{itemInfo.title}}</view>
+    <view class="item-date">{{itemInfo.ann_date}}</view>
+  </view>
+  <view class="data-num">
+    {{itemInfo.diff_today}}天{{itemInfo.before_today>0?'前':(itemInfo.before_today==0?'':'后')}}
+  </view>
+</view>

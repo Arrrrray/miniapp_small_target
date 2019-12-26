@@ -151,10 +151,7 @@ page {
   word-break: break-all;
 }
 
-/* .todo-list {
-  width: 96%;
-  margin: 2%;
-} */
+
 
 .add-icon {
   width: 80rpx;

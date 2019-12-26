@@ -14,13 +14,15 @@
     "pages/im/im",
     "pages/im/room/room",
     "pages/todolist/addTodoList/index",
-    "pages/todolist/todoListDetail/index"
+    "pages/todolist/todoListDetail/index",
+    "pages/anniversaryList/anniversaryDetail/index",
+    "pages/anniversaryList/addAnniversary/index"
   ],
   "window": {
     "backgroundColor": "#F6F6F6",
     "backgroundTextStyle": "light",
     "navigationBarBackgroundColor": "#F6F6F6",
-    "navigationBarTitleText": "小目标 大梦想",
+    "navigationBarTitleText": "每一个日子，都值得被纪念",
     "navigationBarTextStyle": "black"
   },
   "sitemapLocation": "sitemap.json",

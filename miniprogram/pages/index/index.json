@@ -1,6 +1,7 @@
 {
   "enablePullDownRefresh": true,
   "usingComponents": {
-    "todoListItem": "../../components/todoListItem"
+    "todoListItem": "../../components/todoListItem",
+    "anniversaryItem": "../../components/anniversaryItem"
   }
 }

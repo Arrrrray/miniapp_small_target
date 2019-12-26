@@ -1,4 +1,6 @@
 //index.js
+import moment from '../../common/js/moment/moment.js';
+import utils from '../../utils/index';
 const app = getApp()
 
 Page({
@@ -11,9 +13,10 @@ Page({
     todoListOpen: [],
     todoListDone: [],
     todoListClosed: [],
+    anniversaryList: [], // 纪念日列表
   },
 
-  onLoad: function() {
+  onLoad: function () {
     if (!wx.cloud) {
       wx.redirectTo({
         url: '../chooseLib/chooseLib',
@@ -37,27 +40,30 @@ Page({
         }
       }
     });
+    this.getAnniversaryList();
   },
 
   /**
    * 生命周期函数--监听页面显示
    */
-  onShow: function() {
-    this.getTodoListOpen();
-    this.getTodoListDone();
-    this.getTodoListClosed();
+  onShow: function () {
+    this.getAnniversaryList();
+    // this.getTodoListOpen();
+    // this.getTodoListDone();
+    // this.getTodoListClosed();
   },
 
   /**
    * 页面相关事件处理函数--监听用户下拉动作
    */
-  onPullDownRefresh: function() {
-    this.getTodoListOpen();
-    this.getTodoListDone();
-    this.getTodoListClosed();
+  onPullDownRefresh: function () {
+    this.getAnniversaryList();
+    // this.getTodoListOpen();
+    // this.getTodoListDone();
+    // this.getTodoListClosed();
   },
 
-  onGetUserInfo: function(e) {
+  onGetUserInfo: function (e) {
     if (!this.data.logged && e.detail.userInfo) {
       this.setData({
         logged: true,
@@ -67,7 +73,7 @@ Page({
     }
   },
 
-  onGetOpenid: function() {
+  onGetOpenid: function () {
     // 调用云函数
     wx.cloud.callFunction({
       name: 'login',
@@ -89,13 +95,13 @@ Page({
   },
 
   // 上传图片
-  doUpload: function() {
+  doUpload: function () {
     // 选择图片
     wx.chooseImage({
       count: 1,
       sizeType: ['compressed'],
       sourceType: ['album', 'camera'],
-      success: function(res) {
+      success: function (res) {
 
         wx.showLoading({
           title: '上传中',
@@ -138,7 +144,7 @@ Page({
     })
   },
 
-  getTodoListOpen: function() {
+  getTodoListOpen: function () {
     wx.showLoading({
       title: '加载中',
     })
@@ -153,7 +159,7 @@ Page({
           status: 'open',
         }
       },
-      success: function(res) {
+      success: function (res) {
         wx.hideLoading()
         _this.setData({
           todoListOpen: _this.formatTodoList(res.result.data),
@@ -162,7 +168,7 @@ Page({
       fail: console.error
     })
   },
-  getTodoListDone: function() {
+  getTodoListDone: function () {
     wx.showLoading({
       title: '加载中',
     })
@@ -177,7 +183,7 @@ Page({
           status: 'done',
         }
       },
-      success: function(res) {
+      success: function (res) {
         wx.hideLoading()
         _this.setData({
           todoListDone: _this.formatTodoList(res.result.data),
@@ -186,7 +192,7 @@ Page({
       fail: console.error
     })
   },
-  getTodoListClosed: function() {
+  getTodoListClosed: function () {
     wx.showLoading({
       title: '加载中',
     })
@@ -211,7 +217,7 @@ Page({
     })
   },
 
-  formatTodoList: function(data) {
+  formatTodoList: function (data) {
     const newData = data.map((item, index) => {
       return {
         id: item._id,
@@ -224,10 +230,55 @@ Page({
     return newData;
   },
 
-  addTodoList: function() {
+  addTodoList: function () {
     wx.navigateTo({
       url: '/pages/todolist/addTodoList/index',
     })
-  }
+  },
+
+  addAnniversary: function () {
+    wx.navigateTo({
+      url: '/pages/anniversaryList/addAnniversary/index',
+    })
+  },
+
+  getAnniversaryList() {
+    wx.showLoading({
+      title: '加载中',
+    })
+    const _this = this;
+    wx.cloud.callFunction({
+      // 云函数名称
+      name: 'anniversaryList',
+      // 传给云函数的参数
+      data: {
+        type: 'get',
+        data: {}
+      },
+      success: function (res) {
+        wx.hideLoading()
+        console.log(res);
+        console.log(_this.formatAnniversaryList(res.result.data));
+        _this.setData({
+          anniversaryList: _this.formatAnniversaryList(res.result.data),
+        })
+      },
+      fail: console.error
+    })
+  },
+
+  formatAnniversaryList(data) {
+    const newData = data.map((item, index) => {
+      return {
+        id: item._id,
+        title: item.title.slice(0, 20),
+        description: item.description,
+        ann_date: moment(item.ann_date).format('YYYY-MM-DD dddd'),
+        before_today: utils.diffToday(item.ann_date),
+        diff_today: Math.abs(utils.diffToday(item.ann_date)),
+      }
+    });
+    return newData;
+  },
 
 })
